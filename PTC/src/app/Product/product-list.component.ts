@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Router } from '@angular/router';
 import { Product } from "./product";
 import { ProductService } from "./product.service"
 import { ProductSearch } from "./productSearch";
@@ -13,7 +13,8 @@ import { CategoryService } from "../Category/category.service";
 export class ProductListComponent implements OnInit
 {
     constructor(private productService: ProductService,
-                private categoryService: CategoryService) {
+        private categoryService: CategoryService,
+        private router: Router) {
 
     }
 
@@ -45,6 +46,10 @@ export class ProductListComponent implements OnInit
         this.searchEntity.categoryId = 0;
         this.searchEntity.productName = "";
         this.getProducts();
+    }
+
+    add() {
+        this.router.navigate(['/productDetail', -1]);
     }
 
     private getSearchCategories() {

@@ -15,6 +15,7 @@ var app_component_1 = require("./app.component");
 var product_list_component_1 = require("./Product/product-list.component");
 var product_service_1 = require("./Product/product.service");
 var category_service_1 = require("./Category/category.service");
+var product_detail_component_1 = require("./Product/product-detail.component");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -27,7 +28,8 @@ var AppModule = /** @class */ (function () {
             ],
             declarations: [
                 app_component_1.AppComponent,
-                product_list_component_1.ProductListComponent
+                product_list_component_1.ProductListComponent,
+                product_detail_component_1.ProductDetailComponent
             ],
             bootstrap: [
                 app_component_1.AppComponent
