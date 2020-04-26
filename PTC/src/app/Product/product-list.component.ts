@@ -48,8 +48,20 @@ export class ProductListComponent implements OnInit
         this.getProducts();
     }
 
+    selectProduct(id: number) {
+        this.router.navigate(['/productDetail', id]);
+    }
+
     add() {
         this.router.navigate(['/productDetail', -1]);
+    }
+
+    deleteProduct(id: number) {
+        if (confirm("Delete this product?")) {
+            this.productService.deleteProduct(id)
+                .subscribe(() => this.getProducts(),
+                    errors => this.handleErrors(errors));
+        }
     }
 
     private getSearchCategories() {

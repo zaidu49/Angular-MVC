@@ -45,8 +45,18 @@ var ProductListComponent = /** @class */ (function () {
         this.searchEntity.productName = "";
         this.getProducts();
     };
+    ProductListComponent.prototype.selectProduct = function (id) {
+        this.router.navigate(['/productDetail', id]);
+    };
     ProductListComponent.prototype.add = function () {
         this.router.navigate(['/productDetail', -1]);
+    };
+    ProductListComponent.prototype.deleteProduct = function (id) {
+        var _this = this;
+        if (confirm("Delete this product?")) {
+            this.productService.deleteProduct(id)
+                .subscribe(function () { return _this.getProducts(); }, function (errors) { return _this.handleErrors(errors); });
+        }
     };
     ProductListComponent.prototype.getSearchCategories = function () {
         var _this = this;

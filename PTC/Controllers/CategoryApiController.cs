@@ -35,6 +35,28 @@ namespace PTC.Controllers
             return ret;
         }
 
+        public IHttpActionResult Get()
+        {
+            IHttpActionResult ret;
+            PTCViewModel vm = new PTCViewModel();
+
+            vm.LoadCategories();
+            if (vm.Categories.Count() > 0)
+            {
+                ret = Ok(vm.Categories);
+            }
+            else if (vm.LastException != null)
+            {
+                ret = BadRequest(vm.Message);
+            }
+            else
+            {
+                ret = NotFound();
+            }
+
+            return ret;
+        }
+
         //GET api/<controller>
         //public IEnumerable<string> Get()
         //{

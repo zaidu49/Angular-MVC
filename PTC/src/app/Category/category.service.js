@@ -20,6 +20,11 @@ var CategoryService = /** @class */ (function () {
         this.http = http;
         this.url = "/api/categoryApi";
     }
+    CategoryService.prototype.getCategories = function () {
+        return this.http.get(this.url)
+            .map(this.extractData)
+            .catch(this.handleErrors);
+    };
     CategoryService.prototype.getSearchCategories = function () {
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         var options = new http_1.RequestOptions({ headers: headers });

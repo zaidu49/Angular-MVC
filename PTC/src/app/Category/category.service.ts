@@ -15,6 +15,12 @@ export class CategoryService {
 
     }
 
+    getCategories(): Observable<Category[]> {
+        return this.http.get(this.url)
+            .map(this.extractData)
+            .catch(this.handleErrors);
+    }
+
     getSearchCategories(): Observable<Category[]> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });

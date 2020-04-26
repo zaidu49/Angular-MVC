@@ -25,10 +25,35 @@ var ProductService = /** @class */ (function () {
             .map(this.extractData)
             .catch(this.handleErrors);
     };
+    ProductService.prototype.getProduct = function (id) {
+        var url = this.url + "/" + id;
+        return this.http.get(url)
+            .map(this.extractData)
+            .catch(this.handleErrors);
+    };
     ProductService.prototype.Search = function (searchEntity) {
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         var options = new http_1.RequestOptions({ headers: headers });
         return this.http.post(this.url + "/Search", searchEntity, options)
+            .map(this.extractData)
+            .catch(this.handleErrors);
+    };
+    ProductService.prototype.addProduct = function (product) {
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.post(this.url, product, options)
+            .map(this.extractData)
+            .catch(this.handleErrors);
+    };
+    ProductService.prototype.updateProduct = function (product) {
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.put(this.url + "/" + product.productId, product, options)
+            .map(this.extractData)
+            .catch(this.handleErrors);
+    };
+    ProductService.prototype.deleteProduct = function (id) {
+        return this.http.delete(this.url + "/" + id)
             .map(this.extractData)
             .catch(this.handleErrors);
     };
@@ -39,9 +64,17 @@ var ProductService = /** @class */ (function () {
     ProductService.prototype.handleErrors = function (error) {
         var errors = [];
         switch (error.status) {
-            case 400: //Bad Request
+            case 400: //Bad Request ot Model State Error
                 var err = error.json();
-                if (err.message) {
+                if (err.modelState) {
+                    var valErrors = error.json().modelState;
+                    for (var key in valErrors) {
+                        for (var i = 0; i < valErrors[key].length; i++) {
+                            errors.push(valErrors[key][i]);
+                        }
+                    }
+                }
+                else if (err.message) {
                     errors.push(err.message);
                 }
                 else {
